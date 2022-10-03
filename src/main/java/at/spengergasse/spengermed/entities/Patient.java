@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Patient extends Person{
     LocalDateTime admissionDate;
 
-    Patient generateExample(){
+    public static Patient generateExample(){
         var patient = new Patient().builder()
                 .pNr(7L)
                 .firstName("A")
