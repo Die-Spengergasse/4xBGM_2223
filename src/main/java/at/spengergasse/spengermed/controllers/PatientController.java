@@ -15,7 +15,7 @@ public class PatientController extends PersonController<Patient> {
     PatientRepository patientRepository;
 
     @Autowired
-    PersonController personController;
+    PersonController<Patient> personController;
 
     public PatientController(CrudRepository<Person, Long> repository) {
         super();

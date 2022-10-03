@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public abstract class PersonController<T> {
 
-
     Iterable<T> findAllEntitites (CrudRepository<T, Long> repository){
         return repository.findAll();
     }
