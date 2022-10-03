@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:latest
+    ports:
+      - '3306:3306'
+    cap_add:
+      - SYS_NICE
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 'spengermed'
+      # MYSQL_USER: toor
+      # MYSQL_PASSWORD: root
