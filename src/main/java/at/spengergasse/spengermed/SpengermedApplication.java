@@ -23,7 +23,6 @@ public class SpengermedApplication {
 	// 9. Add a new endpoint to both controllers, to update a entity by id
 	// 10. Add a new endpoint to both controllers, to get a entity by name
 
-	// Hint: Since both Patient and Practitioner are People you can create a base class ``
 
 	// Here are some infos to get started: 
 	// --> https://spring.io/guides/gs/accessing-data-jpa/

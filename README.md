@@ -21,6 +21,30 @@ class Something {
 }
 ```
 
+### Tipps für die Implementierung
+Da sowohl `Patient` als auch `Pracitioner` Personen sind wäre es möglich eine abstrakte Basisiklasse Person zu erstellen
+in der allgemeine Properties bereits enthalten sind.
+
+Da beide Controller ein sehr ähnliches Verhalten haben kann man dieses unabhängig vom Typ mittels *generics* implementieren.
+Für je Patient als auch Pracitioner kann dann eine Ableitung davon anderen Mappings zugeordnet sein.
+
+```java
+public abstract class PersonController<T, ...> {
+
+    @GetMapping("/all")
+    List<T> getAllEntities() {
+        ...
+    }
+    
+    ...
+}
+
+@RequestMapping("/patient")
+public class PatientController extends PersonController<Patient> {
+    ...
+}
+
+```
 
 ## FHIR
 FHIR steht für `Fast Healthcare Interoperability Resources`. Und ist ein von [HL7](https://www.hl7.org/about/index.cfm?ref=nav) veröffentlichter Standard um Daten im Gesundheitsbereich Programmübergreifend austauschen zu können. [HL7](https://www.hl7.org/about/index.cfm?ref=nav) ist eine Organisation welche für die ANSI in den USA Standards im Gesundheitswesen entwickelt. Durch diesen Standard können alle möglichen Gesundheitsprogrammen Daten untereinander austauschen. Vielleicht auch mal deines? 
