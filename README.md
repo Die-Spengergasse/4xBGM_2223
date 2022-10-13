@@ -17,7 +17,7 @@ Tipp: Um nicht immer Getter, Setter etc. in einer Klasse implementieren zu müss
 @NoArgsConstructor
 @ToString
 class Something {
-    var someProperty;
+    int someProperty = 0;
 }
 ```
 
@@ -29,25 +29,36 @@ Da beide Controller ein sehr ähnliches Verhalten haben kann man dieses unabhän
 Für je Patient als auch Pracitioner kann dann eine Ableitung davon anderen Mappings zugeordnet sein.
 
 ```java
-public abstract class PersonController<T, ...> {
-
-    @GetMapping("/all")
-    List<T> getAllEntities() {
+public class PersonController<T, ...>{
+    
+    public List<T> getAllEntities(){
         ...
     }
-    
+
     ...
 }
 
 @RequestMapping("/patient")
-public class PatientController extends PersonController<Patient> {
+public class PatientController {
+
+    PersonController<Patient> baseController;
+
+    @GetMapping("/")
+    public List<Patient> getAllEntities() {
+        return baseController.getAllEntities();
+    }
+    
     ...
 }
 
 ```
 
 ## FHIR
-FHIR steht für `Fast Healthcare Interoperability Resources`. Und ist ein von [HL7](https://www.hl7.org/about/index.cfm?ref=nav) veröffentlichter Standard um Daten im Gesundheitsbereich Programmübergreifend austauschen zu können. [HL7](https://www.hl7.org/about/index.cfm?ref=nav) ist eine Organisation welche für die ANSI in den USA Standards im Gesundheitswesen entwickelt. Durch diesen Standard können alle möglichen Gesundheitsprogrammen Daten untereinander austauschen. Vielleicht auch mal deines? 
+FHIR steht für `Fast Healthcare Interoperability Resources`. Und ist ein von [HL7](https://www.hl7.org/about/index.cfm?ref=nav) v
+eröffentlichter Standard um Daten im Gesundheitsbereich Programmübergreifend austauschen zu können. 
+[HL7](https://www.hl7.org/about/index.cfm?ref=nav) ist eine Organisation welche für die ANSI in den USA Standards 
+im Gesundheitswesen entwickelt. Durch diesen Standard können alle möglichen Gesundheitsprogrammen Daten 
+untereinander austauschen.
 
 
 ## Tests
@@ -71,16 +82,20 @@ public void testCompareReturnedPatientJSONtoFHIRCompliantJSON() throws Exception
 }
 ```
 
-Die initialen Testdaten sollen in der Ressourcendatei `import.sql` direkt als SQL-Statements eingefügt werden. Beim Start deines Programmes werden alle SQL-Befehle in dieser Datei ausgeführt.
+Die initialen Testdaten sollen in der Ressourcendatei `import.sql` direkt als SQL-Statements eingefügt werden. 
+Beim Start deines Programmes werden alle SQL-Befehle in dieser Datei ausgeführt.
 
 ### Generierung von SQL-Daten
-Um zu testen ob deine SQL-Statements funktionieren kannst du sie bevor du sie in `import.sql` einfügst auch manuell ausführen. Starte dazu das Repository und gehe dann auf die Weboberfläche der H2-Datenbank. Diese erreichst du unter: http://localhost:8080/h2-console 
+Um zu testen ob deine SQL-Statements funktionieren kannst du sie bevor du sie in `import.sql` einfügst auch manuell 
+ausführen. Starte dazu den Webserfer und gehe dann auf die Weboberfläche der H2-Datenbank. 
+Diese erreichst du unter: http://localhost:8080/h2-console 
 
 Wenn dein Befehl ohne Fehler ausgeführt wird, kannst du ihn bedenkenlos einfügen. Beachte aber, dass im Ausgangszustand dieses Projekts noch keine Entitäten angelegt wurden. Es ist also noch kein `CREATE TABLE`-Statement ausgeführt worden. 
 
 ## API-Designrichtlinien
 
-Bitte beachte bei den HTTP-Requestmethoden den dazugehörigen [RFC 7231 Sektion 4.3](https://www.rfc-editor.org/rfc/rfc7231#section-4.3)
+Bitte beachte bei den HTTP-Requestmethoden den dazugehörigen 
+[RFC 7231 Sektion 4.3](https://www.rfc-editor.org/rfc/rfc7231#section-4.3)
 
 Kurz zusammengefasst, wann man was nimmt:
 <table>
@@ -110,7 +125,13 @@ Kurz zusammengefasst, wann man was nimmt:
 Auch gibt es einen schönen Blogartikel von Stackoverflow in dem gutes API-Design erklärt wird. 
 [Blogartikel: Best practises for REST API Design](https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/)
 
+## Native Queries
 
+Um komplexere Abfragen jeglicher Art durchführen kann man direkt SQL einsetzen. In Spring gibt es die Möglichkeit 
+mit der [@Query Annotation](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.at-query) 
+Abfragen direkt zu definieren. 
+Prüfe vor der Query-Verwendung in der H2-Console ob die Abfragen auch richtig sind. 
 
-
+Gib jeder Funktion in einem Repository diese Annotation mit der entsprechenden Abfrage. Eine Anleitung wie man diese 
+Aufbaut findest du [hier](https://www.baeldung.com/spring-data-jpa-query).
 

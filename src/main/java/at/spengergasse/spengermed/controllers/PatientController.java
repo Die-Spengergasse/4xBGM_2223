@@ -9,24 +9,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/patient")
-public class PatientController extends PersonControllerBehaviour<Patient> {
+public class PatientController {
     @Autowired
     PatientRepository patientRepository;
 
-    PersonControllerBehaviour<Patient> personControllerBehaviour = new PersonControllerBehaviour<>();
+    PersonControllerBehaviour<Patient, Long> personControllerBehaviour = new PersonControllerBehaviour<>();
 
     @GetMapping("/add")
     Patient addPatient(){
+
         return personControllerBehaviour.addEntity(Patient.generateExample(), patientRepository);
     }
-
 
     @GetMapping("/")
     Iterable<Patient> findAllPatients(){
         return personControllerBehaviour.findAllEntitites(patientRepository);
     }
-
-
-
 }
 

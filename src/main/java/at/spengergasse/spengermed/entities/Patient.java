@@ -1,30 +1,26 @@
 package at.spengergasse.spengermed.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
-@SuperBuilder
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@Table(name = "Patient")
 public class Patient extends Person{
     LocalDateTime admissionDate;
 
-    public static Patient generateExample(){
-        var patient = new Patient().builder()
-                .pNr(7L)
-                .firstName("A")
-                .lastName("B")
-                .admissionDate(LocalDateTime.now())
-                .build();
+    // auto-generateable with Alt+Einfg
+    public Patient(Long pNr, String firstName, String lastName, LocalDateTime admissionDate) {
+        super(pNr, firstName, lastName);
+        this.admissionDate = admissionDate;
+    }
 
-        return patient;
+    public static Patient generateExample(){
+        return new Patient(0L, "Peter", "Lustig", LocalDateTime.now());
     }
 }
