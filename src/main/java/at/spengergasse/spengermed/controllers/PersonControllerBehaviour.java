@@ -8,6 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 @NoArgsConstructor
 public class PersonControllerBehaviour<T, ID> {
 
+    // todo implement generalizable behaviour here
+
     Iterable<T> findAllEntitites (CrudRepository<T, ID> repository){
         return repository.findAll();
     }
