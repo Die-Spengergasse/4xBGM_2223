@@ -2,8 +2,10 @@ package at.spengergasse.spengermed.controllers;
 
 import at.spengergasse.spengermed.entities.Coding;
 import at.spengergasse.spengermed.entities.Patient;
+import at.spengergasse.spengermed.entities.PatientContactRelationship;
 import at.spengergasse.spengermed.entities.Person;
 import at.spengergasse.spengermed.repositories.CodingRepository;
+import at.spengergasse.spengermed.repositories.PatientContactRelationshipRepo;
 import at.spengergasse.spengermed.repositories.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class PatientController extends PersonController<Patient> {
     @Autowired
     CodingRepository codingRepository;
 
+    @Autowired
+    PatientContactRelationshipRepo relationshipRepo;
+
 
 
     @GetMapping("/")
@@ -31,10 +36,14 @@ public class PatientController extends PersonController<Patient> {
         return patientRepository.findAll();
     }
 
-
     @GetMapping("/codings")
     Iterable<Coding> findAllCodings(){
         return codingRepository.findAll();
+    }
+
+    @GetMapping("/relationships")
+    Iterable<PatientContactRelationship> findAllPCRelationships(){
+        return relationshipRepo.findAll();
     }
 
 }
