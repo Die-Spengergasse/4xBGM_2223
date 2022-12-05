@@ -3,6 +3,7 @@ package at.spengergasse.spengermed.entities;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -23,4 +24,7 @@ public class Patient extends Person{
     public static Patient generateExample(){
         return new Patient(0L, "Peter", "Lustig", LocalDateTime.now());
     }
+
+    @OneToOne
+    ContactBackboneElement contact;
 }
