@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RequestMapping("/patient")
 @RestController
-public class PatientController extends PersonController<Patient> {
+public class PatientController {
 
     @Autowired
     PatientRepository patientRepository;
